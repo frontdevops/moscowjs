@@ -1,0 +1,613 @@
+<doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+
+	<title>ES7 Decorators - Alexander Mayorov, MoscowJS 28</title>
+
+	<meta name="description" content="ES7 Decorators - Alexander Mayorov, MoscowJS 28">
+	<meta name="author" content="Alexander Mayorov">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/github-gist.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+	<style>
+		.slide-number {
+			font-size: 80% !important;
+		}
+
+		pre {
+			box-shadow: none !important;
+		}
+
+		pre.myfix {
+			font-size: 70% !important;
+		}
+
+		code.myfix {
+			overflow: hidden !important;
+			word-wrap: break-word !important;
+		}
+
+		b.b {
+			color: #0000ee;
+		}
+	</style>
+</head>
+<body>
+<div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<ul class="slides">
+		<section>
+			<h1>ES7 Decor@tors</h1>
+			<div style="font-size: 100%">MoscowJS 28</div>
+			<p>
+				<small>Alexander <a href="http://majorov.su">Mayorov</a><a href="mailto:mayorov@tutu.ru"><b>@Tutu.ru</b></a>
+				</small>
+			</p>
+		</section>
+
+		<section>
+			<h3>Александр Майоров</h3>
+			<p>Руководитель Frontend отдела <br> <a style="font-weight: bold" href="http://tutu.ru" target="_blank">Tutu.ru</a></p>
+			<hr>
+			<div style="float: left">
+				<a href="https://twitter.com/frontdevops"><i class="fa fa-twitter-square"></i></a> @frontdevops
+			</div>
+			<div style="float:right;">
+				<a href="https://www.facebook.com/alexander.majorov"><i class="fa fa-facebook-square"></i></a> @alexander.majorov
+			</div>
+		</section>
+
+		<section>
+			<h2>Angular2</h2>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+import {Component} from 'angular2/core';
+
+@Component({
+  selector: 'my-app',
+  template: '<h1>My First Angular 2 App</h1>'
+})
+
+export class AppComponent { }
+</code></pre>
+		</section>
+		<section>
+			<h2>Redux</h2>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+import { connect } from 'react-redux';
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class MyApp extends React.Component {}
+</code></pre>
+		</section>
+
+
+		<section>
+			<img src="images/commercial-at.png" alt="">
+		</section>
+		<section>
+			<h2>@</h2>
+			<p>В языках программирования:</p>
+			<ul>
+				<li>Ruby — идентификатор поля экземпляра класса</li>
+				<li>PHP — подавление вывода</li>
+				<li>CoffeeScript — алиас для оператора this</li>
+				<li>Java — объявление аннотации</li>
+				<li>Python — объявление декоратора</li>
+				<li>ES/TS — объявление декоратора</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>Декоратор?</h2>
+			<!--ul>
+				<li>Профессия</li>
+				<li>Шаблон проектирования</li>
+			</ul-->
+		</section>
+
+		<!--section>
+			<h3>Пример декоратора</h3>
+			<div>
+				<p>без оператора декорирования</p>
+<pre><code class="hljs" data-trim>
+class Cat {  }
+let myCat = new black( Cat(🐱) );
+</code></pre>
+			</div>
+			<div class="fragment">
+				<p>c оператором декорирования</p>
+<pre><code class="hljs" data-trim>
+@black
+class Cat { }
+let myCat = new Cat(😸);
+</code></pre>
+			</div>
+		</section-->
+
+		<section>
+			<h2>ES7 @Decorator</h2>
+			<!--
+				Выражение, принимающее в качестве аргументов объект, имя и дексриптор декориуемого объекта.
+				Может возвращать функцию, дескриптор, новый объект или ничего.
+			-->
+			<div style="text-align: left">
+				<p>Decorator = function ( target, name, descriptor )</p>
+				<ul>
+					<li>=> function Decorator ( target, name, descriptor ){ ... }</li>
+					<li>=> descriptor</li>
+					<li>=> void</li>
+				</ul>
+			</div>
+		</section>
+		<section>
+			<h3>Декораторы</h3>
+			<p>используются для:</p>
+			<ul>
+				<li>декорирования</li>
+				<li>аннотирования</li>
+			</ul>
+		</section>
+
+
+		<section>
+			<h2>Можно декорировать</h2>
+			<table>
+				<thead></thead>
+				<tbdoy>
+					<tr>
+						<td>Классы</td>
+						<td><b class="b">@decorate</b> class A {}</td>
+					</tr>
+					<tr>
+						<td>Методы</td>
+						<td>class A { <b class="b">@decorate</b> foo(){} }</td>
+					</tr>
+					<tr>
+						<td>Свойства</td>
+						<td>class A { <b class="b">@decorate</b> foo = 'bar'; }</td>
+					</tr>
+					<tr>
+						<td>Аргументы*</td>
+						<td>class A { foo(<b class="b">@decorate</b> a){} }</td>
+					</tr>
+				</tbdoy>
+			</table>
+		</section>
+
+		<section>
+			<h1>CLASS</h1>
+		</section>
+
+		<section>
+			<h3>Декоратор класса</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function classDecorator(target) {}
+
+@classDecorator
+class A { }
+</code></pre>
+			<ul>
+				<li>target - конструктор класса</li>
+				<li>return - новый конструктор или ничего</li>
+			</ul>
+		</section>
+		<section>
+			<h3>Пример</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+@Component
+class MyComponent {
+  template = '<h1>Hello, Moscow!</h1>';
+}
+
+let mc = new MyComponent;
+let html = mc.render();
+</code></pre>
+			<hr>
+<pre>
+function Component(target) {
+  target.prototype.render = function() {
+    return this.template;
+  }
+}
+</pre>
+		</section>
+
+		<section>
+			<h1>METHOD</h1>
+		</section>
+		<section>
+			<h3>Декоратор метода</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function methodDecorator(target, key, dcr) {
+  return dcr;
+}
+
+class A {
+  @methodDecorator
+  foo() { }
+}
+</code></pre>
+			<ul>
+				<li>target - ссылка на прототип класса</li>
+				<li>name - имя метода</li>
+				<li>descriptor = Object.getOwnPropertyDescriptor(<br>
+					target.prototype, name)</li>
+				<li>return - ничего или дексриптор</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>Примеры</h2>
+			<h3>декораторов</h3>
+		</section>
+		<section>
+			<h3>@Override</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+class BaseComponent {
+  @override
+  render(){}
+}
+
+class MyComponent extends BaseComponent {
+  render() {
+    return &lt;h1&gt;Hello!&lt;/h1&gt;
+  }
+}
+</code></pre>
+		</section>
+		<section>
+			<h3>@Deprecated</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+class BaseComponent {
+  @deprecated
+  oldMethod(){ /.../ }
+}
+
+let component = new BaseComponent;
+component.oldMethod(); // Warning: deprecated ...
+</code></pre>
+		</section>
+		<section>
+			<h3>@Logger</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+@log
+class Component {
+  @log someMethod(){ /.../ }
+  @log doAnything(){ /.../ }
+}
+</code></pre>
+		</section>
+		<section>
+			<h3>@memoize</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+class Component {
+
+  @memoize
+  function getUserData() { ... }
+
+}
+</code></pre>
+		</section>
+		<section data-transition="fade">
+			<h3>required</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function foo(arg1) {
+  if (arguments.length < 1 || arg1 === undefined)
+    throw new Error('Missing parameters');
+  return arg1 + 2;
+}
+</code></pre>
+			<hr>
+<pre class="fragment myfix"><code class="typescript myfix" data-trim>
+function required(i) {
+ throw new Error(`Missing ${i} parameter`)
+}
+
+function foo(arg1 = required(1)) {
+  return arg1 + 2;
+}
+</code></pre>
+		</section>
+		<section data-transition="fade">
+			<h3>@required</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+@required   ('arg1')
+function foo( arg1 ) {
+  return arg1 + 2;
+}
+</code></pre>
+		</section>
+
+
+		<section>
+			<h1>PROPERTY</h1>
+		</section>
+		<section>
+			<h3>Декоратор свойства</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function (target, key, descriptor) {
+  return descriptor;
+}
+</code></pre>
+			<ul>
+				<li>target - ссылка на прототип класса</li>
+				<li>name - имя свойства</li>
+				<li>return - ничего или дексриптор</li>
+			</ul>
+		</section>
+		<section>
+			<h3>Декоратор свойства</h3>
+			<table style="width: 100%">
+				<tr>
+					<td style="width: 55%">
+						<p>Babel</p>
+<pre style="margin: -10px">
+function(target, key, descriptor){
+
+  let defaultValue =
+    descriptor.initializer();
+
+  return descriptor;
+
+}
+</pre>
+					</td>
+					<td>
+						<p>TypeScript</p>
+<pre style="margin: -10px">
+function (target, key) {
+
+  // default value can get
+  // with getter
+
+  return { new descriptor }
+
+}
+</pre>
+					</td>
+				</tr>
+			</table>
+		</section>
+
+
+		<section>
+			<h2>Примеры</h2>
+			<h3>Декор свойств</h3>
+		</section>
+		<section>
+			<h3>Readonly</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+class Cat {
+  @readonly name = 'Simon';
+}
+
+let myCat = new Cat;
+myCat.name = 'Murzik'; // Throw error
+</code></pre>
+			<hr>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function readonly(target, key, descriptor) {
+  descriptor.writable = false;
+  return descriptor;
+}
+</code></pre>
+		</section>
+
+		<section data-transition="fade">
+			<h1>PARAMETER</h1>
+		</section>
+		<section data-transition="fade">
+			<h3>Декоратор параметра</h3>
+			<div>
+				<p>Only in TypeScript</p>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+declare type ParameterDecorator =
+  (target: Object, propertyKey: string | symbol,
+     parameterIndex: number)
+       => void;
+</code></pre>
+				<ul>
+					<li>target - ссылка на прототип класса</li>
+					<li>name - имя метода или undefined</li>
+					<li>index - номер аргумента</li>
+					<li>return - ничего</li>
+				</ul>
+			</div>
+		</section>
+		<section>
+			<h3>Parameter Decorator</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+class Some {
+  constructor(@dec x, @dec y){}
+  foo(@dec a, @dec b){}
+}
+</code></pre>
+		</section>
+
+		<section>
+			<h1>Decorator factory</h1>
+		</section>
+		<section>
+			<h3>Decorator factory</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+function Factory(params){
+ // do anything with params
+ return function Decorator(targt, name, descrptr){
+  // decorate or annotate target
+  // or descriptor
+  // return any
+ }
+}
+</code></pre>
+		</section>
+		<section>
+			<h3>Фабричный декоратор</h3>
+<pre class="myfix"><code class="typescript myfix" data-trim>
+@Component({
+  selector: 'my-app'
+  template: '<h1>My angular :)</h1>'
+})
+class MyComponent {}
+</code></pre>
+		</section>
+
+		<section>
+			<h3>Идеи для декораторов</h3>
+		</section>
+		<section>
+			<p>RunTime Type System</p>
+<pre><code class="hljs" data-trim>
+class SomeClass {
+  @tstring str = 'abc';
+  @tfloat double = 123.321;
+  @tint   integer = 123;
+
+  @type someDo(@cast `int` arg) { ... } // eq: @cast('int') arg
+
+  @type `int` doAnything(@cast `float` arg) { return arg }
+
+  @type({
+    'arguments': ['int'],
+    'return': 'float'
+  })
+  someDo(@cast `int` arg) { ... }
+}
+</code></pre>
+		</section>
+
+		<section>
+			<h3>core-decorators.js</h3>
+			<a href="https://github.com/jayphelps/core-decorators.js" target="_blank">https://github.com/jayphelps/core-decorators.js</a>
+			<table>
+				<tr>
+					<td>
+						<ul>
+							<li>@readonly</li>
+							<li>@nonconfigurable</li>
+							<li>@nonenumerable</li>
+							<li>@lazyInitialize</li>
+							<li>@autobind</li>
+							<li>@deprecate</li>
+							<li>@suppressWarnings</li>
+						</ul>
+					</td>
+					<td>
+						<ul>
+							<li>@enumerable</li>
+							<li>@override</li>
+							<li>@debounce</li>
+							<li>@throttle</li>
+							<li>@time</li>
+							<li>@autobind</li>
+							<li>@mixin</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+		</section>
+
+		<section>
+			<h3>ES7 Metadata reflection API</h3>
+			<p>https://goo.gl/vic44t</p>
+		</section>
+
+		<section>
+			<h3>Что почитать</h3>
+			<ul>
+				<li>Exploring ES2016 Decorators
+					<br><a href="https://goo.gl/tMrBbF">goo.gl/tMrBbF</a>
+				</li>
+				<li>Decorators & metadata reflection in TypeScript: From Novice to Expert
+					<br><a href="http://goo.gl/jNV24M">http://goo.gl/jNV24M</a>
+				</li>
+				<li>Decorators proposal
+					<br><a href="https://goo.gl/uYlxd9">https://goo.gl/uYlxd9</a>
+				</li>
+				<li>The 5 ES7 Decorators I want to use, now.
+					<br><a href="https://goo.gl/fFLiwv">https://goo.gl/fFLiwv</a>
+				</li>
+			</ul>
+		</section>
+
+		<section style="text-align: left;" data-transition="zoom">
+			<h1>Спасибо!</h1>
+			<p>
+				<i class="fa fa-envelope-o"></i> Alexander <a href="http://slides.com">Mayorov @ Tutu.ru</a>
+				<br><a href="https://www.facebook.com/alexander.majorov"><i class="fa fa-facebook-square"></i></a> @alexander.majorov
+				<br><a href="https://medium.com/frontman"><i class="fa fa-medium"></i></a> @frontman
+				<br>
+				<a href="https://twitter.com/frontdevops"><i class="fa fa-twitter-square"></i></a>
+				<a href="https://github.com/frontdevops"><i class="fa fa-github-square"></i></a> @frontdevops
+			</p>
+			<p>
+				Презентация: <a href="http://moscowjs.majorov.su/">http://moscowjs.majorov.su</a>
+			</p>
+		</section>
+
+	</ul>
+</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script>
+	// Full list of configuration options available at:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		slideNumber: true,
+		controls: false,
+		progress: true,
+		history: true,
+		center: true,
+		transition: 'slide', // none/fade/slide/convex/concave/zoom
+		// Optional reveal.js plugins
+		dependencies: [
+			{
+				src: 'lib/js/classList.js',
+				condition: function () { return !document.body.classList }
+			},
+			//{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			//{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function () { hljs.initHighlightingOnLoad() }
+			},
+			{
+				src: 'plugin/zoom-js/zoom.js',
+				async: true},
+			{
+				src: 'plugin/notes/notes.js',
+				async: true
+			}
+		]
+	});
+</script>
+</body>
+</html>
