@@ -77,7 +77,7 @@
 		<section>
 			<h3>Александр Майоров</h3>
 			<p>Руководитель Frontend отдела <br>
-				<img src="images/tutu-logo-cl-800.png" alt="tutu.ru" height="60">
+				<img src="images/tutu-logo-cl-800.png" alt="tutu.ru" style="height: 10%">
 			</p>
 			<hr>
 			<div style="float: left">
@@ -95,7 +95,7 @@
 
 		<section>
 			<h2>Angular2</h2>
-<pre class="myfix"><code class="typescript myfix" data-trim>
+<pre class="myfix"><code class="hljs myfix" data-trim>
 import {Component} from 'angular2/core';
 
 @Component({
@@ -112,7 +112,7 @@ export class AppComponent { }
 		</section>
 		<section>
 			<h2>Redux</h2>
-<pre class="myfix"><code class="typescript myfix" data-trim>
+<pre class="myfix"><code class="hljs myfix" data-trim>
 import { connect } from 'react-redux';
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -127,7 +127,7 @@ export default class MyApp extends React.Component {}
 
 
 		<section>
-			<img src="images/commercial-at.png" alt="">
+			<img src="images/commercial-at.png" alt=".">
 			<aside class="notes">
 				Мы привыкли называть этот символ - собакой.
 				По стандартам и ГОСТу он называется коммерческое Эт.
@@ -149,31 +149,12 @@ export default class MyApp extends React.Component {}
 
 		<section>
 			<h2>Декоратор?</h2>
-			<img src="images/scat-1.png" alt="cat" height="300">
+			<img src="images/scat-1.png" alt="cat" style="height: 40%;">
 			<aside class="notes">
 				Профессия. Декоратор интерьеров. Декоратор сцен...
 				Структурный шаблон проектирпования.
 			</aside>
 		</section>
-
-		<!--section>
-			<h3>Пример декоратора</h3>
-			<div>
-				<p>без оператора декорирования</p>
-<pre><code class="hljs" data-trim>
-class Cat {  }
-let myCat = new black( Cat(🐱) );
-</code></pre>
-			</div>
-			<div class="fragment">
-				<p>c оператором декорирования</p>
-<pre><code class="hljs" data-trim>
-@black
-class Cat { }
-let myCat = new Cat(😸);
-</code></pre>
-			</div>
-		</section-->
 
 		<section>
 			<h2>ES7 @Decorator</h2>
@@ -199,7 +180,7 @@ let myCat = new Cat(😸);
 			</aside>
 		</section>
 		<section>
-			<h3>Используются</h3>
+			<h3>@ Используется</h3>
 			<p>для</p>
 			<ul>
 				<li>декорирования</li>
@@ -241,7 +222,7 @@ let myCat = new Cat(😸);
 
 		<section>
 			<h1>CLASS</h1>
-			<img src="images/scat-3.jpg" alt="cat" height="300">
+			<img src="images/scat-3.jpg" alt="cat" style="height: 50%">
 		</section>
 
 		<section>
@@ -279,7 +260,7 @@ function Component(target) {
 
 		<section>
 			<h1>METHOD</h1>
-			<img src="images/scat-2.jpg" alt="cat" height="300">
+			<img src="images/scat-2.jpg" alt="cat"style="height: 50%">
 		</section>
 		<section>
 			<h3>Декоратор метода</h3>
@@ -293,7 +274,7 @@ function decorator(target, key, descriptor) {
 }
 </code></pre>
 			<ul>
-				<li>target - ссылка на прототип класса</li>
+				<li>target - ссылка на prototype класса</li>
 				<li>key - имя метода</li>
 				<li>descriptor = Object.getOwnPropertyDescriptor</li>
 				<li>return - ничего или дескриптор</li>
@@ -382,7 +363,7 @@ function foo( arg1 ) {
 
 		<section>
 			<h1>PROPERTY</h1>
-			<img src="images/scat-4.jpg" alt="cat" height="300">
+			<img src="images/scat-5.jpg" alt="cat" style="height: 50%">
 		</section>
 		<section>
 			<h3>Декоратор свойства</h3>
@@ -392,7 +373,7 @@ function (target, key, descriptor) {
 }
 </code></pre>
 			<ul>
-				<li>target - ссылка на прототип класса</li>
+				<li>target - ссылка на prototype класса</li>
 				<li>key - имя свойства</li>
 				<li>return - ничего или дескриптор</li>
 			</ul>
@@ -434,7 +415,7 @@ function (target, key) {
 
 		<section>
 			<h2>Пример</h2>
-			<p>Декоратор свойства</p>
+			<p>Декоратор свойств</p>
 		</section>
 		<section>
 			<h3>Readonly</h3>
@@ -457,6 +438,7 @@ function readonly(target, key, descriptor) {
 
 		<section>
 			<h1>PARAMETER</h1>
+			<img src="images/scat-4.jpg" alt="cat" style="height: 50%">
 		</section>
 		<section>
 			<h3>Декоратор параметра</h3>
@@ -468,7 +450,7 @@ declare type ParameterDecorator =
 	=> void;
 </code></pre>
 				<ul>
-					<li>target - ссылка на прототип класса</li>
+					<li>target - ссылка на prototype класса</li>
 					<li>key - имя метода или undefined</li>
 					<li><b>index</b> - номер аргумента</li>
 					<li>return - ничего</li>
@@ -479,15 +461,15 @@ declare type ParameterDecorator =
 			<h3>Parameter Decorator</h3>
 <pre class="myfix"><code class="typescript myfix" data-trim>
 class Some {
-  constructor(@dec x, @dec y){}
-  foo(@dec('any args') a, @dec('any args') b){}
+  constructor(@annotate x, @annotate y){}
+  foo(@annotate a, @annotate b){}
 }
 </code></pre>
 		</section>
 
 		<section>
 			<h1>Decorator factory</h1>
-			<img src="images/factory.png" alt="factory" height="300">
+			<img src="images/factory.png" alt="factory" style="height: 50%">
 		</section>
 		<section>
 			<h3>Decorator factory</h3>
@@ -514,7 +496,9 @@ class MyComponent {}
 		</section>
 
 		<section>
-			<h3>Идеи для декораторов</h3>
+			<h3>Идеи</h3>
+			<img src="images/ideas.png" alt="." style="height: 50%">
+			<h3>для декораторов</h3>
 		</section>
 		<section>
 			<p>RunTime Type System</p>
@@ -567,7 +551,7 @@ class SomeClass {
 							<li>@debounce</li>
 							<li>@throttle</li>
 							<li>@time</li>
-							<li>@autobind</li>
+							<li>@decorate</li>
 							<li>@mixin</li>
 						</ul>
 					</td>
@@ -581,6 +565,7 @@ class SomeClass {
 				<i class="fa fa-medium"></i>
 				<a href="http://bit.ly/es7-decorators">bit.ly/es7-decorators</a>
 			</p>
+			<img src="images/qr-read-links.gif" alt="." style="height: 50%">
 		</section>
 
 
@@ -588,10 +573,10 @@ class SomeClass {
 			<h3>Будущее ?</h3>
 			<p>Decorators hell!!!</p>
 <pre class="myfix"><code class="hljs myfix" data-trim>
-@lorem @ipsum @dolor
-@sit @amet @consectetur
 @Component({ app: 'myapp' })
 @View({ template: 'mytemplate' })
+@log
+@lorem @ipsum @dolor @sit @amet @consectetur
 class SomeClass {
  @readonly @deprecated
  @memoize
